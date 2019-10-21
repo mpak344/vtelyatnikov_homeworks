@@ -28,6 +28,7 @@ func TestEncoder(t *testing.T) {
 	require.Equal(t, concat(EncodeString("45")), "first character can't be number", "error test failed")
 
 	// (*)
+	
 	require.Equal(t, concat(EncodeString("qwe\\4\\5")), "qwe45", "qwe45 failed")
 	require.Equal(t, concat(EncodeString("qwe\\45")), "qwe44444", "qwe44444 failed")
 	require.Equal(t, concat(EncodeString("qwe\\\\5")), "qwe\\\\\\\\\\", "qwe\\\\\\\\\\ failed")
