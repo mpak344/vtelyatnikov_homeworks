@@ -1,11 +1,12 @@
-package DoublyLinkedList
+package doublylinkedlist
 
 import (
 	"github.com/stretchr/testify/require"
 	"testing"
 )
-func TetsLen(t *testing.T) { 
-	list := new(List) 
+
+func TetsLen(t *testing.T) {
+	list := new(List)
 	list.PushFront(123)
 	list.PushFront(234)
 	list.PushFront(345)
@@ -15,13 +16,13 @@ func TetsLen(t *testing.T) {
 	list2.PushBack(123)
 	list2.PushBack(234)
 	list2.PushBack(345)
-	require.Equal(t, list2.Len(), 3) 
+	require.Equal(t, list2.Len(), 3)
 
 	require.Equal(t, new(List).Len(), 0)
-} 
+}
 
 func TestPushFront(t *testing.T) {
-	list := new(List) 
+	list := new(List)
 	list.PushFront(123)
 	require.Equal(t, list.First().Value(), 123)
 	require.Equal(t, list.Last().Value(), 123)
@@ -30,7 +31,7 @@ func TestPushFront(t *testing.T) {
 	require.Equal(t, list.Last().Value(), 123)
 
 	bigList := new(List)
-	for i:=0; i < 10; i++ {
+	for i := 0; i < 10; i++ {
 		bigList.PushFront(i)
 	}
 	require.Equal(t, bigList.First().Value(), 9)
@@ -38,7 +39,7 @@ func TestPushFront(t *testing.T) {
 }
 
 func TestPushBack(t *testing.T) {
-	list := new(List) 
+	list := new(List)
 	list.PushBack(123)
 	require.Equal(t, list.First().Value(), 123)
 	require.Equal(t, list.Last().Value(), 123)
@@ -47,7 +48,7 @@ func TestPushBack(t *testing.T) {
 	require.Equal(t, list.Last().Value(), 234)
 
 	bigList := new(List)
-	for i:=0; i < 10; i++ {
+	for i := 0; i < 10; i++ {
 		bigList.PushBack(i)
 	}
 	require.Equal(t, bigList.First().Value(), 0)
@@ -56,7 +57,7 @@ func TestPushBack(t *testing.T) {
 
 func TestRemove(t *testing.T) {
 	list := new(List)
-	for i:=0; i < 10; i++ {
+	for i := 0; i < 10; i++ {
 		list.PushBack(i)
 	}
 	require.Equal(t, list.First().Value(), 0)
@@ -68,7 +69,7 @@ func TestRemove(t *testing.T) {
 	require.Equal(t, list.Last().Value(), 8)
 	require.Equal(t, list.Len(), 8)
 
-	for ; list.First() != nil; {
+	for list.First() != nil {
 		list.Remove(*list.First())
 	}
 	require.Equal(t, list.Len(), 0)
