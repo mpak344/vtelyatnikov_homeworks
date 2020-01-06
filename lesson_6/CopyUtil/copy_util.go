@@ -11,8 +11,8 @@ import (
 * файл источник (From)
 * файл копия (To)
 * Отступ в источнике (Offset), по умолчанию - 0
-* Количество копируемых байт (Limit),
-по умолчанию - весь файл из From Выводить в консоль прогресс копирования в %,
+* Количество копируемых байт (Limit), по умолчанию - весь файл из From
+Выводить в консоль прогресс копирования в %,
 например с помощью github.com/cheggaaa/pb Программа может НЕ обрабатывать файлы,
 у которых не известна длинна (например /dev/urandom).
 
@@ -30,17 +30,20 @@ import (
 var chankSize int = 16
 
 func copy(from *os.File, to *os.File, lim int64) error {
-	buf := make([]byte, lim)
+	buf := make([]byte, chankSize)
+
 	var _lim int64 = 0
-	for _lim < lim {
-		n, err := from.Read(buf[_lim:])
-		lim += int64(n)
+	for _lim <= lim {
+		n, err := from.Read(buf)
 		if err == io.EOF {
 			return nil
 		}
 		if err != nil {
 			return err
 		}
+		to.Write(buf[:n])
+		_lim += int64(n)
+		fmt.Printf("Copy progress %v \n", int(float64(_lim)/float64(lim)*100.0))
 	}
 	return nil
 }
@@ -66,9 +69,9 @@ func Copy(from string, to string, limit int64, offset int64) error {
 		limit = fileSize - offset
 	}
 
-	//if fileSize <= 0 {
-	//	return fmt.Errorf("Can't determine file size")
-	//}
+	if fileSize <= 0 {
+		return fmt.Errorf("Can't determine file size")
+	}
 
 	if int64(offset) > fileSize {
 		return fmt.Errorf("Can't copy file %v offset > filesize", from)
